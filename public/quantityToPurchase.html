@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="ShoppingApp">
+    <head>
+        <title>Quantity to Purchase</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
+        <script src="js/ngStorage.min.js"></script>
+        <script src="js/shopping.js"></script>
+        <link href="css/website.css" rel="stylesheet" type="text/css">
+    </head>
+    <body  ng-controller="ShoppingCartController as shopCtrl">
+        <div ng-include="'menu.html'" ></div>
+
+        <h2>How many do you want to buy?</h2>
+
+        <table>
+            <tr> 
+                <th>ID:</th>
+                <td> {{shopCtrl.selectedProduct.productID}}</td>
+            </tr>
+            <tr>
+                <th>Name:</th>
+                <td>{{shopCtrl.selectedProduct.name}}</td>
+            </tr>
+            <tr>
+                <th>Description:</th>
+                <td>{{shopCtrl.selectedProduct.description}} </td>
+            </tr>
+            <tr>
+                <th>Price:</th>
+                <td>{{shopCtrl.selectedProduct.listPrice|currency}}</td>
+            </tr>
+            <tr>
+                <th>Quantity available:</th>
+                <td>{{shopCtrl.selectedProduct.quantityInStock}}</td>
+            </tr>
+        </table>
+        
+        
+        <div class="quantityToBuy">
+            
+            <h3 id="quantityHeader">Quantity to buy</h3>
+
+            <div class="addToCart"> 
+                Quantity: 
+                <input class="quantityInput" ng-model="quantity" type="number" min="0" name="quantity">
+
+            </div>
+            <div>
+                <button ng-click="shopCtrl.addToCart(quantity)">Add to Cart</button>
+            </div>
+        </div>
+
+
+    </body>
+</html>

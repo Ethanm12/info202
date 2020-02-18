@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="ShoppingApp">
+    <head>
+        <title>Shopping Cart</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
+        <script src="js/ngStorage.min.js"></script>
+        <script src="js/shopping.js"></script>
+        <link href="css/website.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body ng-controller="ShoppingCartController as shopCtrl">
+        <div ng-include="'menu.html'" ></div>
+
+        <h2> Shopping Cart </h2>
+
+        <table ng-controller="ShoppingCartController as shopCtrl" >
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+
+            </tr>
+            <tr ng-repeat="items in shopCtrl.items">
+
+                <td>{{items.product.name}}</td>
+                <td>{{items.salePrice|currency}}</td>
+                <td>{{items.quantityPurchased}}</td>
+                <td>{{items.getItemTotal()|currency}}</td>
+            </tr>
+            <tr>
+                <td class="totalCost">Total Cost</td>
+                <td></td>
+                <td></td>
+                <td class="totalCost">{{shopCtrl.total|currency}}</td>
+            </tr>
+            <tr>
+
+            </tr>
+
+        </table>
+        
+        <div class="shoppingCartDiv">
+            <button class="shoppingCartButton" ng-click="shopCtrl.checkOutCart(cart)">Check Out Cart</button>
+        </div>
+        
+    </body>
+</html>

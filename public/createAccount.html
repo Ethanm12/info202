@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html ng-app="ShoppingApp">
+    <head>
+        <title>Create an Account</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/angular.min.js"></script>
+        <script src="js/angular-resource.min.js"></script>
+        <script src="js/ngStorage.min.js"></script>
+        <script src="js/shopping.js"></script>
+        <link href="css/website.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div ng-include="'menu.html'" ></div>
+        
+
+        <h2> Create an Account </h2>
+        <h3> Account Details </h3>
+
+        <form id="createAccountForm" ng-controller="CustomerController as custCtrl" ng-submit="custCtrl.registerCustomer(customer)" required>
+            <h4> User Name:</h4>
+            <input class="createAccountInput" type="text" ng-model="customer.username" required placeholder="JohnDoe">
+            <br> <br>
+            <h4>First name:</h4>
+            <input class="createAccountInput" type="text" ng-model="customer.firstName" required placeholder="John">
+            <br><br>
+            <h4>Last name:</h4>
+            <input class="createAccountInput" type="text" ng-model="customer.surname" required placeholder="Doe">
+            <br><br>
+            <h4>Email:</h4>
+            <input class="createAccountInput" type="email" ng-model="customer.email" required placeholder="john.doe@example.com">
+            <br><br>
+            <h4>Address:</h4>
+            <input class="createAccountInput" type="text" ng-model="customer.shippingAddress" required placeholder="123 Example Street">
+            <br><br>
+            <h4>Credit Card:</h4>
+            <input class="createAccountInput" type="text" ng-model="customer.creditCard" required placeholder="123-234-5678">
+            <br><br>
+            <h4>Password:</h4>
+            <input class="createAccountInput" type="password" ng-model="customer.password" required placeholder="******">
+            <br><br>
+            <button id="createAccountbutton" type="submit">Create Account</button>
+        </form> 
+
+    </body>
+</html>
