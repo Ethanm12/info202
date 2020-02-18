@@ -1,0 +1,73 @@
+@startuml
+
+' style tweaks to make the diagram a little more readable
+skinparam {
+	Style strictuml
+	RoundCorner 8
+
+	Sequence {
+		' make activations yellow too
+		LifeLineBackgroundColor #FDFDCD
+
+		' make stereotypes less ugly
+		Stereotype {
+			Font {
+				Size 11
+				Style plain
+			}
+		}
+	}
+
+	DatabaseBorderColor #A80036
+
+}
+
+title Search by ID
+
+actor User as user
+participant "Main" as main << main >>
+participant "MainMenu" as menu << frame >>
+participant "ProductReportDialog" as report << dialog >>
+participant "ProductDAO" as dao << DAO >>
+database "Database" as db
+
+create menu
+main -> menu : « create »
+
+user -> menu : clicks 'View Products'
+activate menu
+
+create report
+menu -> report : « create »
+
+activate report
+create dao
+report -> dao: « create »
+
+
+note over report: as shown in\n'View Products'\ndiagram
+user <-- report : list of products displayed
+
+deactivate report
+
+user -> report++ : inserts product ID 
+report--
+
+user -> report++ : clicks 'Search' button
+report -> report : txtSearchID.getText() : id
+
+report -> dao++ : search(productID)
+
+dao -> db++ : select * from Product where ProductID = ?
+return ResultSet
+dao -> dao : reconstruct products\nfrom ResultSet
+return products
+dao--
+
+
+report -> report : productsModel.updateItems(search)
+report--
+note left: product with\nselected ID\ndisplayed in report
+
+@enduml
+

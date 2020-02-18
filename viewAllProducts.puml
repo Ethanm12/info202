@@ -1,0 +1,46 @@
+@startuml
+' use strict UML mode
+skinparam style strictuml
+
+actor "User" as user
+
+participant "MainClass" as main <<main>>
+main++
+
+create "MainMenu" as menu <<frame>>
+main -> menu : construct
+main -> menu++ : setVisible(true)
+
+user -> menu++ : click 'View Products'
+
+create "ProductReport" as report <<dialog>>
+menu -> report : create
+
+' activate editor constructor
+report++
+
+' create a DAO
+create "ProductDAO" as dao <<DAO>>
+report -> dao : construct 
+
+create "SimpleListModel : myModel" as model
+report -> model : construct 
+
+report -> dao++ : getProducts()
+return products
+
+report -> model++ : updateItems(products)
+model--
+
+report -> report : listPReport.setModel(myModel);
+
+report--
+
+
+
+'dispose dialog
+report -> report : dispose()
+
+destroy report
+
+@enduml

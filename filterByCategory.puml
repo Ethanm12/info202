@@ -1,0 +1,70 @@
+@startuml
+
+' style tweaks to make the diagram a little more readable
+skinparam {
+	Style strictuml
+	RoundCorner 8
+
+	Sequence {
+		' make activations yellow too
+		LifeLineBackgroundColor #FDFDCD
+
+		' make stereotypes less ugly
+		Stereotype {
+			Font {
+				Size 11
+				Style plain
+			}
+		}
+	}
+
+	DatabaseBorderColor #A80036
+
+}
+
+title Filter By Category
+
+actor User as user
+participant "Main" as main << main >>
+participant "MainMenu" as menu << frame >>
+participant "ProductReportDialog" as report << dialog >>
+participant "ProductDAO" as dao << DAO >>
+database "Database" as db
+
+
+create menu
+main -> menu : « create »
+
+user -> menu : clicks 'View Products'
+activate menu
+
+create report
+menu -> report : « create »
+
+activate report
+create dao
+report -> dao: « create »
+
+
+note over report: as shown in\n'View Products'\ndiagram
+user <-- report : list of products displayed
+
+deactivate report
+
+user -> report++ : selects category from combo box
+
+report -> report : categoryFilterComboBox.getSelectedItem() : categroy
+
+report -> dao++ : filter(Category)
+dao -> db++ : select * from Product where category = ?
+return ResultSet
+dao -> dao : reconstruct products\nfrom ResultSet
+return products
+dao--
+
+report -> report : productsModel.updateItems(filter)
+report--
+note left: products in\nselected category\ndisplayed in report
+
+@enduml
+

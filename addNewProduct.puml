@@ -1,0 +1,64 @@
+@startuml
+' use strict UML mode
+skinparam style strictuml
+
+actor "User" as user
+
+participant "MainClass" as main <<main>>
+main++
+
+create "MainMenu" as menu <<frame>>
+main -> menu : construct
+main -> menu++ : setVisible(true)
+
+user -> menu++ : click 'Add a New Product'
+
+create "ProductEntry" as entry <<dialog>>
+menu -> entry : create
+
+' activate editor constructor
+entry++
+
+' create a DAO
+create "ProductDAO" as dao <<DAO>>
+entry -> dao : construct 
+
+create "SimpleListModel : myModel" as model
+entry -> model : construct 
+
+entry -> dao++ : getCategory()
+return categories
+
+entry -> model++ : updateItems(categories)
+model--
+
+entry -> entry : combo.setModel(myModel)
+
+entry--
+
+' user enters product details and clicks the save product button
+user -> entry++ : enter product details
+entry--
+
+user -> entry++ : clicks save button
+
+create "Product : product" as product <<domain>>
+entry -> product : construct
+
+' get the product details from GUI components
+entry -> entry : get product details \nfrom GUI components
+
+' set the details of product
+entry -> product++ : set details
+product--
+
+' save product
+entry -> dao++ : save(product)
+dao--
+
+'dispose dialog
+entry -> entry : dispose()
+
+destroy entry
+
+@enduml
