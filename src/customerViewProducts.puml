@@ -1,0 +1,36 @@
+@startuml
+
+' use strict UML mode
+skinparam style strictuml
+
+actor "User" as user
+
+create "viewProducts" as webpage <<Products Web Page>>
+user -> webpage++ : click 'Browse Products'
+
+create "Shopping" as js <<AngularJS Product Controller>>
+webpage -> js++ : ProductController
+js -> js : productDAO.query()
+
+create "ProductModule" as jooby <<Jooby Product Module>>
+js -> jooby++ : GET request sending \nparent URI (/api/products)
+jooby -> jooby : get("/api/products")
+
+create "ManageProductsDAO" as dao <<Product DAO>>
+jooby -> dao++ : getProducts()
+dao -> jooby : list of products
+dao--
+
+jooby --> js : products (JSON)
+jooby--
+
+js -> js : update table
+js--
+
+js --> webpage : table updated
+webpage--
+
+webpage --> user : list of products
+
+
+@enduml
